@@ -14,7 +14,7 @@ To install VigiLynx, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/VigiLynx.git
+    git clone https://github.com/HarshaBhat24/VigiLynx.git
     ```
 2. Navigate to the project directory:
     ```bash
