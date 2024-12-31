@@ -11,6 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
 class PhishingDetector:
+    print('PhishingDetector')
     def __init__(self, dataset_path='phishing.csv'):
         self.data = pd.read_csv(dataset_path)
         self.prepare_data()
@@ -115,9 +116,7 @@ class PhishingDetector:
 def main():
     detector = PhishingDetector()
     test_urls = [
-        'https://in.pinterest.com/',
-        'https://www.google.com/',
-        'http://verify-account-security.com'
+        'http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4'
     ]
     
     for url in test_urls:
@@ -130,6 +129,6 @@ def main():
         else:
             print("Unable to analyze the URL")
 
+
 if __name__ == '__main__':
     main()
-
