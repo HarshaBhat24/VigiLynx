@@ -12,7 +12,6 @@ import os
 from sklearn.ensemble import RandomForestClassifier
 
 class PhishingDetector:
-    print('PhishingDetector')
     def __init__(self, dataset_path='phishing.csv'):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         dataset_path = os.path.join(script_dir, 'phishing.csv')
@@ -57,10 +56,8 @@ class PhishingDetector:
                     else:
                         creation_date = domain_info.creation_date
                     
-                    # Convert domain age to numeric days
                     domain_age = (datetime.datetime.now() - creation_date).days
-                    features['domain_age'] = max(0, domain_age)  # Ensure non-negative
-                else:
+                    features['domain_age'] = max(0, domain_age) 
                     features['domain_age'] = 0
             except Exception as e:
                 features['domain_age'] = 0
@@ -97,11 +94,9 @@ class PhishingDetector:
             print("Could not extract features from the URL")
             return None
         
-        # Create DataFrame with all expected columns
         features_df = pd.DataFrame(columns=self.X_processed.columns)
-        features_df.loc[0] = 0  # Initialize with zeros
+        features_df.loc[0] = 0 
         
-        # Update with extracted features
         for col, val in url_features.items():
             if col in features_df.columns:
                 features_df.loc[0, col] = val
