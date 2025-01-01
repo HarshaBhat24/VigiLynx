@@ -12,39 +12,28 @@ from sklearn.model_selection import cross_val_score, StratifiedKFold
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
 
-# Load the dataset
 file = "phishing.csv"
 data = pd.read_csv(file)
 
-# Map the target variable
 data['status'] = data['status'].map({'phishing': 1, 'legitimate': 0})
-# print(data['status'].value_counts())
 
-# Separate features (X) and target (y)
 x = data.drop(['status'], axis=1)
 y = data['status']
 
-# Drop columns with all missing values
 x = x.dropna(axis=1, how='all')
 
-# Separate numeric and non-numeric columns
 numeric_cols = x.select_dtypes(include=['number']).columns
 categorical_cols = x.select_dtypes(include=['object']).columns
 
-# Impute missing values for numeric columns
 imputer = SimpleImputer(strategy='mean')
 x_numeric = pd.DataFrame(imputer.fit_transform(x[numeric_cols]), columns=numeric_cols)
 
-# One-hot encode categorical columns
 x_categorical = pd.get_dummies(x[categorical_cols], drop_first=True)
 
-# Combine numeric and categorical columns
 x_processed = pd.concat([x_numeric, x_categorical], axis=1)
 
-# Ensure column alignment
 assert x_processed.shape[1] == x_numeric.shape[1] + x_categorical.shape[1], "Column mismatch detected!"
 
-# Split the data
 x_train, x_test, y_train, y_test = train_test_split(x_processed, y, test_size=0.2, random_state=42)
 
 

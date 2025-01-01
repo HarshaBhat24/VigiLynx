@@ -8,11 +8,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
+import os
 from sklearn.ensemble import RandomForestClassifier
 
 class PhishingDetector:
     print('PhishingDetector')
     def __init__(self, dataset_path='phishing.csv'):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        dataset_path = os.path.join(script_dir, 'phishing.csv')
         self.data = pd.read_csv(dataset_path)
         self.prepare_data()
         self.train_model()
@@ -108,27 +111,9 @@ class PhishingDetector:
         prediction = self.model.predict(features_scaled)
         probability = self.model.predict_proba(features_scaled)[0][1]
         
-        return {
-            'is_phishing': bool(prediction[0]),
-            'phishing_probability': probability
-        }
-
-def main():
-    detector = PhishingDetector()
-    test_urls = [
-        'http://shadetreetechnology.com/V4/validation/a111aedc8ae390eabcfa130e041a10a4'
-    ]
-    
-    for url in test_urls:
-        print(f"\nChecking URL: {url}")
-        result = detector.predict_phishing(url)
-        
-        if result:
-            print(f"Is Phishing: {result['is_phishing']}")
-            print(f"Phishing Probability: {result['phishing_probability']:.2%}")
-        else:
-            print("Unable to analyze the URL")
+        print(f"Phishing Probability: {probability*100}%")
+        print(f"Is Phishing: {bool(prediction[0])}")
 
 
 if __name__ == '__main__':
-    main()
+    pass
